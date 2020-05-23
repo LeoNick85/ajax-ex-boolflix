@@ -1,0 +1,28 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+header {
+    height: 120px;
+    padding: 0px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #505050;
+}
+
+h1 {
+    color: red;
+    font-family: sans-serif;
+}
+
+main {
+    height: calc(100vh - 120px);
+    background-color: #7e6767;
+}
+
+.container {
+    width: 80%;
+}
