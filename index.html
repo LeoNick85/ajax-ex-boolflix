@@ -22,16 +22,13 @@
         </main>
     </body>
     <!-- template -->
-    <script id="chat-utente-template" type="text/x-handlebars-template">
-        <div class="chat-utente {{position}}">
-            <p class="message-text">{{text}}</p>
-            <p class="chat-time-message">{{time}}</p>
-            <i class="fas fa-angle-down"></i>
-            <div class="message-hidden-menu">
-                <p>Message Info</p>
-                <p>Delete Message</p>
-            </div>
-        </div>
+    <script id="movie-result-template" type="text/x-handlebars-template">
+        <ul>
+            <li>{{title}}</li>
+            <li>{{original_title}}</li>
+            <li>{{language}}</li>
+            <li>{{rating}}</li>
+        </ul>
     </script>
     <!-- altre risorse -->
     <script src="main.js" charset="utf-8"></script>
