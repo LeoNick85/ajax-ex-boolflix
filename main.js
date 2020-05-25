@@ -56,6 +56,7 @@ function find_movies(search) {
                     //Creo un oggetto con i valori che mi interessano
                     var html_element = {
                         title : data.results[i].title,
+                        poster : data.results[i].poster_path,
                         original_title : data.results[i].original_title,
                         language : getFlags(data.results[i].original_language),
                         rating : star_rating(data.results[i].vote_average)
@@ -102,6 +103,7 @@ function find_series(search) {
                     //Creo un oggetto con i valori che mi interessano
                     var html_element = {
                         title : data.results[i].name,
+                        poster : data.results[i].poster_path,
                         original_title : data.results[i].original_name,
                         language : getFlags(data.results[i].original_language),
                         rating : star_rating(data.results[i].vote_average)
