@@ -19,7 +19,8 @@ h1 {
 }
 
 body {
-    background-color: #7e6767;
+    background-image: url("img/background.jpg");
+    background-size: cover;
 }
 
 .container {
@@ -27,11 +28,23 @@ body {
     width: 80%;
 }
 
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
 .container p {
     text-align: center;
     font-size: 35px;
     color: white;
     padding: 10px;
+    text-decoration: underline;
+}
+
+.fa-star {
+    color: yellow;
 }
 
 ul {
@@ -63,4 +76,8 @@ li:nth-child(4) {
     background-color: black;
     color: red;
     margin: 8px 0px;
+}
+
+img.flag {
+    width: 20px;
 }
