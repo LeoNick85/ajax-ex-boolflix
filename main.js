@@ -81,39 +81,94 @@ function find_movies(search) {
                 $("main .movies").text("");
                 //Inserisco nel campo relativo della tab il numero dei risultati
                 $("#movies-tab .tot-result").text(data.total_results);
-                //Conto il numero delle pagine e genero altrettanti bottoni in basso ai risultati
+                //Conto il numero delle pagine e genero altrettanti bottoni in basso ai risultati. Per ogni pagina genero una scheda (nascosta) e la riempio con i relativi elementi
                 var total_pages = data.total_pages;
                 for (var i = 1; i <= total_pages; i++) {
                     //Inserisco i bottoni delle pagine con handlebars
+                    var current_page = i;
                     var html_element = {
-                        numero : i
+                        numero : current_page
                     };
                     var template_html = $("#page-button-template").html();
                     var template_function = Handlebars.compile(template_html);
                     var html_finale = template_function(html_element);
                     $("#movie-page").append(html_finale);
-                }
 
-                //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
-                for (var i = 0; i < data.results.length; i++) {
-                    //Creo un oggetto con i valori che mi interessano
-                    var html_element = {
-                        title : data.results[i].title,
-                        poster : data.results[i].poster_path,
-                        original_title : data.results[i].original_title,
-                        language : getFlags(data.results[i].original_language),
-                        rating : star_rating(data.results[i].vote_average)
+                    //Genero la scheda risultati relativa alla pagina
+                    var html_element_page = {
+                        tipo : "movies",
+                        pagina : current_page
                     };
-
-                    //Creo un nuovo elemento con handlebars e lo inserisco in pagina
-                    var template_html = $("#movie-result-template").html();
-
+                    console.log("html page" + current_page);
+                    var template_html = $("#page-template").html();
                     var template_function = Handlebars.compile(template_html);
+                    var html_finale = template_function(html_element_page);
+                    $("#movie-wrapper").append(html_finale);
 
-                    var html_finale = template_function(html_element);
-                    $("main .movies").append(html_finale);
-                    console.log(html_element);
+                    // Faccio una chiamata ajax relativa alla pagina e genero le schede dei film per riempire la relativa pagina
+                    $.ajax({
+                        url : "https://api.themoviedb.org/3/search/movie",
+                        method : "GET",
+                        data : {
+                            api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+                            language : "it",
+                            page : current_page,
+                            query : search
+                            },
+                        success: function(page_data) {
+                                //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
+                                for (var j = 0; j < page_data.results.length; j++) {
+                                    console.log("Numero pagina" + page_data.page);
+                                    //Creo un oggetto con i valori che mi interessano
+                                    var html_element_card = {
+                                        title : page_data.results[j].title,
+                                        poster : page_data.results[j].poster_path,
+                                        original_title : data.results[j].original_title,
+                                        language : getFlags(page_data.results[j].original_language),
+                                        rating : star_rating(page_data.results[j].vote_average)
+                                    };
+                                    console.log(html_element_card);
+                                    //Creo un nuovo elemento con handlebars e lo inserisco in pagina
+                                    var template_html_card = $("#movie-result-template").html();
+
+                                    var template_function = Handlebars.compile(template_html_card);
+
+                                    var html_finale_card = template_function(html_element_card);
+                                    $("main .movies[data-movie-page=" + page_data.page + "]").append(html_finale_card);
+                                }
+                            },
+                        error : function() {
+                            alert("Il cinema è chiuso");
+                            }
+                    })
                 }
+
+                //
+                //
+                //
+                //
+                //
+                //
+                // //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
+                // for (var i = 0; i < data.results.length; i++) {
+                //     //Creo un oggetto con i valori che mi interessano
+                //     var html_element = {
+                //         title : data.results[i].title,
+                //         poster : data.results[i].poster_path,
+                //         original_title : data.results[i].original_title,
+                //         language : getFlags(data.results[i].original_language),
+                //         rating : star_rating(data.results[i].vote_average)
+                //     };
+                //
+                //     //Creo un nuovo elemento con handlebars e lo inserisco in pagina
+                //     var template_html = $("#movie-result-template").html();
+                //
+                //     var template_function = Handlebars.compile(template_html);
+                //
+                //     var html_finale = template_function(html_element);
+                //     $("main .movies").append(html_finale);
+                //     console.log(html_element);
+                // }
             },
         error : function() {
             alert("Il cinema è chiuso");
@@ -140,7 +195,6 @@ function find_series(search) {
                 $("#series-tab .tot-result").text(data.total_results);
                 //Conto il numero delle pagine e genero altrettanti bottoni in basso ai risultati
                 var total_pages = data.total_pages;
-                console.log("Serie: " + total_pages);
                 for (var i = 1; i <= total_pages; i++) {
                     //Inserisco i bottoni delle pagine con handlebars
                     var html_element = {
@@ -170,7 +224,6 @@ function find_series(search) {
 
                     var html_finale = template_function(html_element);
                     $("main .series").append(html_finale);
-                    console.log(html_element);
                 }
             },
         error : function() {
@@ -191,7 +244,6 @@ function star_rating(rating) {
     for (i = 0; i < (5 - rate5); i++) {
         ratingHTML += '<i class="far fa-star"></i>';
     };
-    console.log(ratingHTML);
     return ratingHTML;
 }
 

@@ -39,16 +39,12 @@
                 <div class="result-wrapper active-wrapper" id="movie-wrapper">
                     <div class="page-counter" id="movie-page"></div>
                     <hr>
-                    <div class="container movies" data-movie-page="1">
-                        <!-- RISULTATI FILM -->
-                    </div>
+
                 </div>
-                <div class="result-wrapper active-wrapper" id="series-wrapper">
+                <div class="result-wrapper" id="series-wrapper">
                     <div class="page-counter" id="series-page"></div>
                     <hr>
-                    <div class="container series" data-series-page="1">
-                        <!-- RISULTATI SERIE TV -->
-                    </div>
+
                 </div>
             </div>
         </main>
@@ -58,6 +54,13 @@
     <script id="genre-filter-template" type="text/x-handlebars-template">
         <input type="checkbox" name="{{genere}}" value="">
         <label for="{{genere}}"> {{genere}}</label><br>
+    </script>
+    <!-- template scheda pagina film/tv -->
+    <script id="page-template" type="text/x-handlebars-template">
+        <div class="container {{tipo}}" data-movie-page="{{pagina}}">
+            <!-- RISULTATI FILM/TV -->
+            <p>---------------DIVISORIO---------------</p>
+        </div>
     </script>
     <!-- template bottone cambio pagina -->
     <script id="page-button-template" type="text/x-handlebars-template">
