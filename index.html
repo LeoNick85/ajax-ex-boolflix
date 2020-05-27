@@ -18,26 +18,37 @@
                 <button type="button" name="button"><i class="fas fa-search"></i></button>
             </div>
         </header>
-        <aside>
-            <h2>Generi</h2>
-            <div class="search-filter">
-                <input type="checkbox" name="test" value="">
-                <label for="test"> Drammatico</label><br>
-            </div>
-            <button class="search-filter" type="button" name="button">Filtra i risultati</button>
-        </aside>
         <main>
-            <div class="container clearfix movies">
-                <div class="movie-card">
-                    <div class="poster-overlay">
-
+            <aside>
+                <h2>Generi</h2>
+                <div class="search-filter">
+                    <input type="checkbox" name="test" value="">
+                    <label for="test"> Drammatico</label><br>
+                </div>
+                <button class="search-filter" type="button" name="button">Filtra i risultati</button>
+            </aside>
+            <div id="search-wrapper" class="clearfix">
+                <div class="search-tab">
+                    <div class="result-tab active-tab" id="movies-tab">
+                        <h3>Film <span class="tot-result">123</span></h3>
+                    </div>
+                    <div class="result-tab" id="series-tab">
+                        <h3>Serie TV <span class="tot-result">14</span></h3>
                     </div>
                 </div>
-                <!-- RISULTATI FILM -->
-            </div>
 
-            <div class="container clearfix series">
-                <!-- RISULTATI SERIE TV -->
+                <div class="container clearfix movies">
+                    <div class="movie-card">
+                        <div class="poster-overlay">
+
+                        </div>
+                    </div>
+                    <!-- RISULTATI FILM -->
+                </div>
+
+                <div class="container clearfix series">
+                    <!-- RISULTATI SERIE TV -->
+                </div>
             </div>
         </main>
     </body>

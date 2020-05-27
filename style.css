@@ -41,14 +41,18 @@ body {
     background-image: url("img/background.jpg");
 }
 
+main {
+    display: flex;
+    justify-content: space-around;
+}
+
 aside {
     margin-top: 80px;
-    float: left;
-    width: 20vw;
     background-image: linear-gradient(to top, black, grey);
     border: 3px solid silver;
     border-radius: 5px;
     padding: 16px;
+    align-self: flex-start;
 }
 
 label {
@@ -74,9 +78,33 @@ button.search-filter {
     border-radius: 3px;
 }
 
-main {
+#search-wrapper {
+    margin-top: 20px;
+    width: 70vw;
+}
+
+.result-tab {
     float: left;
-    width: 75vw;
+    width: 50%;
+    height: 60px;
+    background-color: #a8b1c3;
+    color: white;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+.active-tab {
+    background-color: #505050;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.tot-result {
+    background-color: white;
+    border-radius: 50%;
+    color: black;
+    padding: 4px;
 }
 
 .container {
