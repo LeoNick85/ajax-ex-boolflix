@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
+        <meta name="viewport" content="width=device, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/7220c352f8.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
         <meta charset="utf-8">
         <title>Esercitazione #31 - Boolflix</title>
     </head>
-    <body>
+    <body class="clearfix">
         <header>
             <h1>Boolflix</h1>
             <div id="search-header">
                 <input type="search" name="" value="" placeholder="Inserisci il titolo">
-                <button type="button" name="button">Cerca</button>
+                <button type="button" name="button"><i class="fas fa-search"></i></button>
             </div>
         </header>
+        <aside>
+            <h2>Generi</h2>
+            <div class="search-filter">
+                <input type="checkbox" name="test" value="">
+                <label for="test"> Drammatico</label><br>
+            </div>
+            <button class="search-filter" type="button" name="button">Filtra i risultati</button>
+        </aside>
         <main>
-            <div class="container movies">
+            <div class="container clearfix movies">
+                <div class="movie-card">
+                    <div class="poster-overlay">
+
+                    </div>
+                </div>
                 <!-- RISULTATI FILM -->
             </div>
 
-            <div class="container series">
+            <div class="container clearfix series">
                 <!-- RISULTATI SERIE TV -->
             </div>
         </main>
     </body>
     <!-- template -->
+    <script id="genre-filter-template" type="text/x-handlebars-template">
+        <input type="checkbox" name="{{genere}}" value="">
+        <label for="{{genere}}"> {{genere}}</label><br>
+    </script>
     <script id="movie-result-template" type="text/x-handlebars-template">
         <ul>
             <li><img src="https://image.tmdb.org/t/p/w185{{poster}}" alt=""></li>

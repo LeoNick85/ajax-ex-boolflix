@@ -1,6 +1,25 @@
 
 
 $(document).ready(function(){
+    //Faccio una chiamata ajax per avere la lista dei generi e li aggiungo uno per uno come filtri alla ricerca nella aside
+    $.ajax({
+        url : "https://api.themoviedb.org/3/genre/movie/list",
+        method : "GET",
+        data : {
+            api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+            language : "it"
+            },
+        success: function(data) {
+                //Utilizzo la risposta dell'ajax per stampare in serie i generi come checkbox
+                for (var i = 0; i < data.genres.length; i++) {
+                    addGenreFilter(data.genres[i].name);
+                }
+            },
+        error : function() {
+            alert("Error: Genres");
+            }
+    })
+
     //Cerco i risultati della ricerca alla pressione del bottone cerca
     $("#search-header button").click(function() {
         //Registro l'input dal campo search alla pressione del pulsante cerca
@@ -33,6 +52,18 @@ $(document).ready(function(){
 
 
 //FUNZIONI
+//Funzione per aggiungere un genere ai filtri, tramite template Handlebars
+function addGenreFilter(genere) {
+    var template_html = $("#genre-filter-template").html();
+    var html_element = {
+        genere : genere
+    };
+    var template_function = Handlebars.compile(template_html);
+    var html_finale = template_function(html_element);
+    $("aside div.search-filter").append(html_finale);
+}
+
+
 //Funzione per ricerca film
 function find_movies(search) {
     //Procedo con la chiamata ajax con la ricerca dell'utente
