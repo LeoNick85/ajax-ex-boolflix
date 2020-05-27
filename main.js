@@ -79,8 +79,20 @@ function find_movies(search) {
         success: function(data) {
                 //Svuoto l'html nel campo dei risultati
                 $("main .movies").text("");
-                //Inserisco nel campo dei risultati una stringa con il numero dei risultati
-                $("main .movies").append("<p>FILM - Il numero dei risultati per '" + search + "' è: " + data.results.length);
+                //Inserisco nel campo relativo della tab il numero dei risultati
+                $("#movies-tab .tot-result").text(data.total_results);
+                //Conto il numero delle pagine e genero altrettanti bottoni in basso ai risultati
+                var total_pages = data.total_pages;
+                for (var i = 1; i <= total_pages; i++) {
+                    //Inserisco i bottoni delle pagine con handlebars
+                    var html_element = {
+                        numero : i
+                    };
+                    var template_html = $("#page-button-template").html();
+                    var template_function = Handlebars.compile(template_html);
+                    var html_finale = template_function(html_element);
+                    $("#movie-page").append(html_finale);
+                }
 
                 //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
                 for (var i = 0; i < data.results.length; i++) {
@@ -111,8 +123,6 @@ function find_movies(search) {
 
 //Funzione per ricerca serie tv
 function find_series(search) {
-
-
     //Procedo con la chiamata ajax con la ricerca dell'utente
     $.ajax({
         url : "https://api.themoviedb.org/3/search/tv",
@@ -126,8 +136,21 @@ function find_series(search) {
         success: function(data) {
                 //Svuoto l'html nel campo dei risultati
                 $("main .series").text("");
-                //Inserisco nel campo dei risultati una stringa con il numero dei risultati
-                $("main .series").append("<p>SERIE TV - Il numero dei risultati per '" + search + "' è: " + data.results.length);
+                //Inserisco nel campo relativo della tab il numero dei risultati
+                $("#series-tab .tot-result").text(data.total_results);
+                //Conto il numero delle pagine e genero altrettanti bottoni in basso ai risultati
+                var total_pages = data.total_pages;
+                console.log("Serie: " + total_pages);
+                for (var i = 1; i <= total_pages; i++) {
+                    //Inserisco i bottoni delle pagine con handlebars
+                    var html_element = {
+                        numero : i
+                    };
+                    var template_html = $("#page-button-template").html();
+                    var template_function = Handlebars.compile(template_html);
+                    var html_finale = template_function(html_element);
+                    $("#series-page").append(html_finale);
+                }
 
                 //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
                 for (var i = 0; i < data.results.length; i++) {

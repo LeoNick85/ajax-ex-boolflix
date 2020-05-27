@@ -107,9 +107,43 @@ button.search-filter {
     padding: 4px;
 }
 
+.result-wrapper {
+    display: none;
+    width: 100%;
+    background-image: linear-gradient(to top, black, grey);
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    color: white;
+}
+
+.active-wrapper {
+    display: block;
+}
+
+.page-counter {
+    padding: 16px;
+    text-align: center;
+}
+
+button.page-btn {
+    padding: 8px;
+    margin: 0px 6px;
+    background-color: black;
+    border: 1px solid red;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .container {
     margin: auto;
-    width: 80%;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 16px 0px;
 }
 
 .container p {
@@ -125,6 +159,7 @@ button.search-filter {
 }
 
 ul {
+    width: 200px;
     list-style-type: none;
     float: left;
     margin: 8px;
@@ -133,6 +168,10 @@ ul {
     border-radius: 8px;
     border: 5px solid #f3f5f9;
     text-align: center;
+}
+
+ul li img {
+    width: 170px;
 }
 
 li:nth-child(1) {

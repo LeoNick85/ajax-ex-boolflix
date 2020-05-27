@@ -28,35 +28,42 @@
                 <button class="search-filter" type="button" name="button">Filtra i risultati</button>
             </aside>
             <div id="search-wrapper" class="clearfix">
-                <div class="search-tab">
+                <div class="search-tab clearfix">
                     <div class="result-tab active-tab" id="movies-tab">
-                        <h3>Film <span class="tot-result">123</span></h3>
+                        <h3>Film <span class="tot-result"></span></h3>
                     </div>
                     <div class="result-tab" id="series-tab">
-                        <h3>Serie TV <span class="tot-result">14</span></h3>
+                        <h3>Serie TV <span class="tot-result"></span></h3>
                     </div>
                 </div>
-
-                <div class="container clearfix movies">
-                    <div class="movie-card">
-                        <div class="poster-overlay">
-
-                        </div>
+                <div class="result-wrapper active-wrapper" id="movie-wrapper">
+                    <div class="page-counter" id="movie-page"></div>
+                    <hr>
+                    <div class="container movies" data-movie-page="1">
+                        <!-- RISULTATI FILM -->
                     </div>
-                    <!-- RISULTATI FILM -->
                 </div>
-
-                <div class="container clearfix series">
-                    <!-- RISULTATI SERIE TV -->
+                <div class="result-wrapper active-wrapper" id="series-wrapper">
+                    <div class="page-counter" id="series-page"></div>
+                    <hr>
+                    <div class="container series" data-series-page="1">
+                        <!-- RISULTATI SERIE TV -->
+                    </div>
                 </div>
             </div>
         </main>
     </body>
     <!-- template -->
+    <!-- template filtro generi -->
     <script id="genre-filter-template" type="text/x-handlebars-template">
         <input type="checkbox" name="{{genere}}" value="">
         <label for="{{genere}}"> {{genere}}</label><br>
     </script>
+    <!-- template bottone cambio pagina -->
+    <script id="page-button-template" type="text/x-handlebars-template">
+        <button class="page-btn" type="button" value="{{numero}}">{{numero}}</button>
+    </script>
+    <!-- template scheda film/serie -->
     <script id="movie-result-template" type="text/x-handlebars-template">
         <ul>
             <li><img src="https://image.tmdb.org/t/p/w185{{poster}}" alt=""></li>
