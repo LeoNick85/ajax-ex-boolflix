@@ -60,6 +60,22 @@ $(document).ready(function(){
             }
         }
     })
+
+    //Cliccando sul numero di pagina passo alla relativa pagina di risultato
+    $(document).on("click", "button.page-btn", function(){
+        var bottone_cliccato = $(this);
+        var numero_pagina_cliccata = bottone_cliccato.val();
+
+        //Tolgo l'active dal precedente bottone della pagina e dalla pagina relativa
+        $(".active-page").removeClass("active-page");
+        $(".active-btn").removeClass("active-btn");
+
+        //Applico la classe active al bottone cliccato e alla pagina relativa
+        bottone_cliccato.addClass("active-btn");
+        var select_test = $(".active-wrapper .container[data-page=" + numero_pagina_cliccata + "]");
+        console.log(select_test);
+        select_test.addClass("active-page");
+    });
 });
 
 
