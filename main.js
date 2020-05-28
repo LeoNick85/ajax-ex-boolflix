@@ -218,7 +218,8 @@ function find_movies(search) {
                                         original_title : new_original_title,
                                         language : new_language,
                                         rating : new_rating,
-                                        genre_card : new_genre
+                                        genre_card : new_genre,
+                                        type : "movie"
                                     };
                                     //Creo un nuovo elemento con handlebars e lo inserisco in pagina
                                     var template_html_card = $("#card-template").html();
@@ -322,7 +323,8 @@ function find_series(search) {
                                         original_title : new_original_title,
                                         language : new_language,
                                         rating : new_rating,
-                                        genre_card : new_genre
+                                        genre_card : new_genre,
+                                        type : "tv"
                                     };
 
                                     //Creo un nuovo elemento con handlebars e lo inserisco in pagina
@@ -349,7 +351,6 @@ function find_series(search) {
 //Funzione per fare una string coi generi a partire dagli // IDEA:
 function genreToString(genre_id) {
     var genre_array = [];
-    console.log(genre_id);
     for (var i = 0; i < genre_id.length; i++) {
         for (var j = 0; j < genre_list.length; j++) {
             if (genre_list[j].id == genre_id[i]) {
@@ -400,12 +401,63 @@ function getFlags(nation) {
 
 //Funzione per creare overlay coi dettagli
 function getDetails(card) {
-    //Genero l'overlay con handlebars
-    var html_element = {
-        poster_url : "img/cinema.jpg"
-    };
-    var template_html = $("#detail-template").html();
-    var template_function = Handlebars.compile(template_html);
-    var html_finale = template_function(html_element);
-    $("main").append(html_finale);
+    //Verifico se è un film o una serie
+    var card_type = card.attr("data-card-type");
+    var current_card_id = card.attr("data-card-id");
+
+    if (card_type == "movie") {
+        var detail_url = "https://api.themoviedb.org/3/movie/" + current_card_id;
+        //Faccio chiamata ajax via id per film
+        $.ajax({
+            url : detail_url,
+            method : "GET",
+            data : {
+                api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+                language : "it"
+                },
+            success: function(data) {
+                //Salvo gli elementi che mi interessano in specifiche variabili
+                var new_title = data.title;
+                if (data.overview == "") {
+                    var new_preview = "Nessuna descrizione";
+                } else {
+                    var new_preview = data.overview;
+                }
+                if (data.poster_path == null) {
+                    var new_poster = "img/cinema.jpg";
+                } else {
+                    var new_poster = "https://image.tmdb.org/t/p/w342" + data.poster_path;
+                }
+                var new_original_title = data.original_title;
+                var new_language = data.original_language;
+                var new_year = data.release_date;
+                var new_genre = [];
+                for (var i = 0; i < data.genres.length; i++) {
+                    new_genre.push(data.genres[i].name);
+                }
+
+                //Genero l'overlay con handlebars
+                var html_element = {
+                    title : new_title,
+                    preview: new_preview,
+                    original_title: new_original_title,
+                    original_language : new_language,
+                    poster_url : new_poster,
+                    genre : new_genre.join(", "),
+                    year : new_year
+                };
+
+                var template_html = $("#detail-template").html();
+                var template_function = Handlebars.compile(template_html);
+                var html_finale = template_function(html_element);
+                $("main").append(html_finale);
+                },
+            error : function() {
+                alert("Error: Genres");
+                }
+        })
+    } else {
+        //Faccio chiamata ajax via id per tv
+    }
+
 };

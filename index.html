@@ -66,7 +66,7 @@
     </script>
     <!-- template scheda film/serie -->
     <script id="card-template" type="text/x-handlebars-template">
-        <div class="flip-card" data-card-id="{{card_id}}">
+        <div class="flip-card" data-card-type="{{type}}" data-card-id="{{card_id}}">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <img src="{{poster}}" alt="Poster" style="width:200px;height:250px;">
@@ -93,10 +93,10 @@
                 </div>
                 <div class="detail-text">
                     <h5>{{title}}</h5>
-                    <p>Sinossi: <span>{{preview}}</span></p>
+                    <p class="preview">{{preview}}</p>
                     <p>Titolo originale: <span>{{original_title}}</span></p>
                     <p>Lingua originale: <span>{{original_language}}</span></p>
-                    <p>Genere: <span>{{original_language}}</span></p>
+                    <p>Genere: <span>{{genre}}</span></p>
                     <p>Cast: <span>{{cast}}</span></p>
                     <p>Anno di Uscita: <span>{{year}}</span></p>
                 </div>
