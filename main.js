@@ -416,48 +416,176 @@ function getDetails(card) {
                 language : "it"
                 },
             success: function(data) {
-                //Salvo gli elementi che mi interessano in specifiche variabili
-                var new_title = data.title;
-                if (data.overview == "") {
-                    var new_preview = "Nessuna descrizione";
-                } else {
-                    var new_preview = data.overview;
-                }
-                if (data.poster_path == null) {
-                    var new_poster = "img/cinema.jpg";
-                } else {
-                    var new_poster = "https://image.tmdb.org/t/p/w342" + data.poster_path;
-                }
-                var new_original_title = data.original_title;
-                var new_language = data.original_language;
-                var new_year = data.release_date;
-                var new_genre = [];
-                for (var i = 0; i < data.genres.length; i++) {
-                    new_genre.push(data.genres[i].name);
-                }
+                var cast_array = [];
+                var cast_url = "https://api.themoviedb.org/3/movie/" + current_card_id + "/credits"
+                var detail_data = data;
 
-                //Genero l'overlay con handlebars
-                var html_element = {
-                    title : new_title,
-                    preview: new_preview,
-                    original_title: new_original_title,
-                    original_language : new_language,
-                    poster_url : new_poster,
-                    genre : new_genre.join(", "),
-                    year : new_year
-                };
+                $.ajax({
+                    url : cast_url,
+                    method : "GET",
+                    data : {
+                        api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+                        language : "it"
+                        },
+                    success: function(data) {
+                            for (var i = 0; (i < data.cast.length) && (i < 5); i++) {
+                                cast_array.push(data.cast[i].name);
+                            }
 
-                var template_html = $("#detail-template").html();
-                var template_function = Handlebars.compile(template_html);
-                var html_finale = template_function(html_element);
-                $("main").append(html_finale);
+                            console.log(cast_array);
+
+
+                            //Salvo gli elementi che mi interessano in specifiche variabili
+                            var new_title = detail_data.title;
+                            if (detail_data.overview == "") {
+                                var new_preview = "Nessuna descrizione";
+                            } else {
+                                var new_preview = detail_data.overview;
+                            }
+                            if (detail_data.poster_path == null) {
+                                var new_poster = "img/cinema.jpg";
+                            } else {
+                                var new_poster = "https://image.tmdb.org/t/p/w342" + detail_data.poster_path;
+                            }
+                            var new_original_title = detail_data.original_title;
+                            var new_language = detail_data.original_language;
+                            var new_year = detail_data.release_date;
+                            var new_genre = [];
+                            for (var i = 0; i < detail_data.genres.length; i++) {
+                                new_genre.push(detail_data.genres[i].name);
+                            }
+                            var new_cast = cast_array;
+
+                            //Genero l'overlay con handlebars
+                            var html_element = {
+                                title : new_title,
+                                preview: new_preview,
+                                original_title: new_original_title,
+                                original_language : new_language,
+                                poster_url : new_poster,
+                                genre : new_genre.join(", "),
+                                year : new_year,
+                                cast : new_cast.join(", ")
+                            };
+
+                            var template_html = $("#detail-template").html();
+                            var template_function = Handlebars.compile(template_html);
+                            var html_finale = template_function(html_element);
+                            $("main").append(html_finale);
+                        },
+                    error : function() {
+                        alert("Error: Genres");
+                        }
+                })
+
                 },
             error : function() {
                 alert("Error: Genres");
                 }
         })
     } else {
-        //Faccio chiamata ajax via id per tv
-    }
+        var detail_url = "https://api.themoviedb.org/3/tv/" + current_card_id;
+        //Faccio chiamata ajax via id per film
+        $.ajax({
+            url : detail_url,
+            method : "GET",
+            data : {
+                api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+                language : "it"
+                },
+            success: function(data) {
+                var cast_array = [];
+                var cast_url = "https://api.themoviedb.org/3/tv/" + current_card_id + "/credits"
+                var detail_data = data;
 
+                $.ajax({
+                    url : cast_url,
+                    method : "GET",
+                    data : {
+                        api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+                        language : "it"
+                        },
+                    success: function(data) {
+                            for (var i = 0; (i < data.cast.length) && (i < 5); i++) {
+                                cast_array.push(data.cast[i].name);
+                            }
+
+                            console.log(cast_array);
+
+
+                            //Salvo gli elementi che mi interessano in specifiche variabili
+                            var new_title = detail_data.name;
+                            if (detail_data.overview == "") {
+                                var new_preview = "Nessuna descrizione";
+                            } else {
+                                var new_preview = detail_data.overview;
+                            }
+                            if (detail_data.poster_path == null) {
+                                var new_poster = "img/cinema.jpg";
+                            } else {
+                                var new_poster = "https://image.tmdb.org/t/p/w342" + detail_data.poster_path;
+                            }
+                            var new_original_title = detail_data.original_name;
+                            var new_language = detail_data.original_language;
+                            var new_year = detail_data.first_air_date;
+                            var new_genre = [];
+                            for (var i = 0; i < detail_data.genres.length; i++) {
+                                new_genre.push(detail_data.genres[i].name);
+                            }
+                            var new_cast = cast_array;
+
+                            //Genero l'overlay con handlebars
+                            var html_element = {
+                                title : new_title,
+                                preview: new_preview,
+                                original_title: new_original_title,
+                                original_language : new_language,
+                                poster_url : new_poster,
+                                genre : new_genre.join(", "),
+                                year : new_year,
+                                cast : new_cast.join(", ")
+                            };
+
+                            var template_html = $("#detail-template").html();
+                            var template_function = Handlebars.compile(template_html);
+                            var html_finale = template_function(html_element);
+                            $("main").append(html_finale);
+                        },
+                    error : function() {
+                        alert("Error: Genres");
+                        }
+                })
+
+                },
+            error : function() {
+                alert("Error: Genres");
+                }
+        })
+    }
 };
+
+//Funzione per creare un array con i primi 5 elementi del cast
+function getCast(type, id) {
+    var cast_array = [];
+    var cast_url = "https://api.themoviedb.org/3/" + type + "/" + id + "/credits"
+
+    $.ajax({
+        url : cast_url,
+        method : "GET",
+        data : {
+            api_key : "fc16baf9f9f37096b14c800ebf114a8a",
+            language : "it"
+            },
+        success: function(data) {
+                for (var i = 0; (i < data.cast.length) && (i < 5); i++) {
+                    cast_array.push(data.cast[i].name);
+                }
+
+                console.log(cast_array);
+                return cast_array;
+            },
+        error : function() {
+            alert("Error: Genres");
+            }
+    })
+}
