@@ -22,29 +22,28 @@
             <aside>
                 <h2>Generi</h2>
                 <div class="search-filter">
-                    <input type="checkbox" name="test" value="">
-                    <label for="test"> Drammatico</label><br>
+                    <!-- lista checkbox generi dinamica-->
                 </div>
                 <button class="search-filter" type="button" name="button">Filtra i risultati</button>
             </aside>
             <div id="search-wrapper" class="clearfix">
                 <div class="search-tab clearfix">
-                    <div class="result-tab active-tab" id="movies-tab">
+                    <div class="result-tab" id="movie-tab">
                         <h3>Film <span class="tot-result"></span></h3>
                     </div>
                     <div class="result-tab" id="series-tab">
                         <h3>Serie TV <span class="tot-result"></span></h3>
                     </div>
                 </div>
-                <div class="result-wrapper active-wrapper" id="movie-wrapper">
+                <div class="result-wrapper" id="movie-wrapper">
                     <div class="page-counter" id="movie-page"></div>
                     <hr>
-
+                    <!-- Pagine risultati film -->
                 </div>
                 <div class="result-wrapper" id="series-wrapper">
                     <div class="page-counter" id="series-page"></div>
                     <hr>
-
+                    <!-- Pagine risultati serie tv -->
                 </div>
             </div>
         </main>
@@ -52,14 +51,13 @@
     <!-- template -->
     <!-- template filtro generi -->
     <script id="genre-filter-template" type="text/x-handlebars-template">
-        <input type="checkbox" name="{{genere}}" value="">
+        <input type="checkbox" name="{{genere}}">
         <label for="{{genere}}"> {{genere}}</label><br>
     </script>
     <!-- template scheda pagina film/tv -->
     <script id="page-template" type="text/x-handlebars-template">
-        <div class="container {{tipo}}" data-movie-page="{{pagina}}">
+        <div class="container {{tipo}}" data-page="{{pagina}}">
             <!-- RISULTATI FILM/TV -->
-            <p>---------------DIVISORIO---------------</p>
         </div>
     </script>
     <!-- template bottone cambio pagina -->
@@ -67,7 +65,7 @@
         <button class="page-btn" type="button" value="{{numero}}">{{numero}}</button>
     </script>
     <!-- template scheda film/serie -->
-    <script id="movie-result-template" type="text/x-handlebars-template">
+    <script id="card-template" type="text/x-handlebars-template">
         <ul>
             <li><img src="https://image.tmdb.org/t/p/w185{{poster}}" alt=""></li>
             <li>{{title}}</li>

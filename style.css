@@ -91,13 +91,14 @@ button.search-filter {
     color: white;
     text-align: center;
     padding: 20px 0px;
+    cursor: pointer;
 }
 
 .active-tab {
     background-color: #505050;
-    border-top: 1px solid white;
-    border-right: 1px solid white;
-    border-left: 1px solid white;
+    border-top: 2px solid red;
+    border-right: 2px solid red;
+    border-left: 2px solid red;
 }
 
 .tot-result {
@@ -137,14 +138,28 @@ button.page-btn {
     cursor: pointer;
 }
 
+button.active-btn {
+    background-color: red;
+    border: 1px solid white;
+    color: black;
+    text-decoration: underline;
+}
+
 .container {
+    display: none;
     margin: auto;
     width: 95%;
+    padding: 16px 0px;
+}
+
+
+.active-page {
+    visibility: visible;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 16px 0px;
 }
+
 
 
 .fa-star {
