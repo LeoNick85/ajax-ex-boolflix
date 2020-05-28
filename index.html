@@ -81,6 +81,28 @@
             </div>
         </div>
     </script>
+    <!-- template dettagli film/serie -->
+    <script id="detail-template" type="text/x-handlebars-template">
+        <div class="element-detail">
+            <div>
+                <i class="far fa-3x fa-window-close"></i>
+            </div>
+            <div class="detail-wrapper clearfix">
+                <div class="detail-poster">
+                    <img src="{{poster_url}}" alt="">
+                </div>
+                <div class="detail-text">
+                    <h5>{{title}}</h5>
+                    <p>Sinossi: <span>{{preview}}</span></p>
+                    <p>Titolo originale: <span>{{original_title}}</span></p>
+                    <p>Lingua originale: <span>{{original_language}}</span></p>
+                    <p>Genere: <span>{{original_language}}</span></p>
+                    <p>Cast: <span>{{cast}}</span></p>
+                    <p>Anno di Uscita: <span>{{year}}</span></p>
+                </div>
+            </div>
+        </div>
+    </script>
     <!-- altre risorse -->
     <script src="main.js" charset="utf-8"></script>
 </html>

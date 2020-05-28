@@ -63,7 +63,7 @@ $(document).ready(function(){
                 $("#series-page button:first-child").addClass("active-btn");
             }
         }
-    })
+    });
 
     //Cliccando sul numero di pagina passo alla relativa pagina di risultato
     $(document).on("click", "button.page-btn", function(){
@@ -78,6 +78,17 @@ $(document).ready(function(){
         bottone_cliccato.addClass("active-btn");
         var select_test = $(".active-wrapper .container[data-page=" + numero_pagina_cliccata + "]");
         select_test.addClass("active-page");
+    });
+
+    //Cliccando su una card apro un contenitore in overlay con i dettagli del FILM/serie
+    $(document).on("click", ".flip-card", function(){
+        var clicked_card = $(this);
+        getDetails(clicked_card);
+    });
+
+    //Cliccando sulla X dell'overlay lo chiudo
+    $(document).on("click", ".fa-window-close", function(){
+        $(".element-detail").remove();
     });
 });
 
@@ -386,3 +397,15 @@ function getFlags(nation) {
         return "img/un.png";
     }
 }
+
+//Funzione per creare overlay coi dettagli
+function getDetails(card) {
+    //Genero l'overlay con handlebars
+    var html_element = {
+        poster_url : "img/cinema.jpg"
+    };
+    var template_html = $("#detail-template").html();
+    var template_function = Handlebars.compile(template_html);
+    var html_finale = template_function(html_element);
+    $("main").append(html_finale);
+};
