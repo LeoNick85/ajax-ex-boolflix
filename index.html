@@ -51,7 +51,7 @@
     <!-- template -->
     <!-- template filtro generi -->
     <script id="genre-filter-template" type="text/x-handlebars-template">
-        <input type="checkbox" name="{{genere}}">
+        <input type="checkbox" name="{{genere}}" value="{{genre_id}}">
         <label for="{{genere}}"> {{genere}}</label><br>
     </script>
     <!-- template scheda pagina film/tv -->
@@ -66,13 +66,20 @@
     </script>
     <!-- template scheda film/serie -->
     <script id="card-template" type="text/x-handlebars-template">
-        <ul>
-            <li><img src="https://image.tmdb.org/t/p/w185{{poster}}" alt=""></li>
-            <li>{{title}}</li>
-            <li>{{original_title}}</li>
-            <li><img src="{{language}}" alt="" class="flag"></li>
-            <li>{{{rating}}}</li>
-        </ul>
+        <div class="flip-card" data-card-id="{{card_id}}">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="{{poster}}" alt="Poster" style="width:200px;height:250px;">
+                </div>
+                <div class="flip-card-back">
+                    <p class="card-title">{{title}}</h1>
+                    <p class="original-title-card">Titolo originale: <span>{{original_title}}</span></p>
+                    <p class="genre-card">Genere: <span>{{genre_card}}</span></p>
+                    <p class="rating-card">{{{rating}}}</p>
+                    <p class="flag"><img src="{{language}}" alt="" class="flag"></p>
+                </div>
+            </div>
+        </div>
     </script>
     <!-- altre risorse -->
     <script src="main.js" charset="utf-8"></script>

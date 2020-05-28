@@ -1,8 +1,9 @@
-
+var genre_list = [];
 
 $(document).ready(function(){
     //Nascondo il contenitore dei risultati di ricerca
     $("#search-wrapper").hide();
+
 
     //Faccio una chiamata ajax per avere la lista dei generi e li aggiungo uno per uno come filtri alla ricerca nella aside
     $.ajax({
@@ -15,8 +16,11 @@ $(document).ready(function(){
         success: function(data) {
                 //Utilizzo la risposta dell'ajax per stampare in serie i generi come checkbox
                 for (var i = 0; i < data.genres.length; i++) {
-                    addGenreFilter(data.genres[i].name);
+                    addGenreFilter(data.genres[i]);
                 }
+
+                genre_list = data.genres;
+
             },
         error : function() {
             alert("Error: Genres");
@@ -73,7 +77,6 @@ $(document).ready(function(){
         //Applico la classe active al bottone cliccato e alla pagina relativa
         bottone_cliccato.addClass("active-btn");
         var select_test = $(".active-wrapper .container[data-page=" + numero_pagina_cliccata + "]");
-        console.log(select_test);
         select_test.addClass("active-page");
     });
 });
@@ -97,7 +100,8 @@ function print_search_results() {
 function addGenreFilter(genere) {
     var template_html = $("#genre-filter-template").html();
     var html_element = {
-        genere : genere
+        genre_id : genere.id,
+        genere : genere.name
     };
     var template_function = Handlebars.compile(template_html);
     var html_finale = template_function(html_element);
@@ -182,13 +186,28 @@ function find_movies(search) {
                         success: function(page_data) {
                                 //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
                                 for (var j = 0; j < page_data.results.length; j++) {
+                                    //Salvo gli elementi che mi interessano in specifiche variabili
+                                    var new_card_id = page_data.results[j].id;
+                                    var new_title = page_data.results[j].title;
+                                    if (page_data.results[j].poster_path == null) {
+                                        var new_poster = "img/cinema.jpg";
+                                    } else {
+                                        var new_poster = "https://image.tmdb.org/t/p/w185" + page_data.results[j].poster_path;
+                                    }
+                                    var new_original_title = data.results[j].original_title;
+                                    var new_language = getFlags(page_data.results[j].original_language);
+                                    var new_rating = star_rating(page_data.results[j].vote_average);
+                                    var new_genre = genreToString(page_data.results[j].genre_ids)
+
                                     //Creo un oggetto con i valori che mi interessano
                                     var html_element_card = {
-                                        title : page_data.results[j].title,
-                                        poster : page_data.results[j].poster_path,
-                                        original_title : data.results[j].original_title,
-                                        language : getFlags(page_data.results[j].original_language),
-                                        rating : star_rating(page_data.results[j].vote_average)
+                                        card_id : new_card_id,
+                                        title : new_title,
+                                        poster : new_poster,
+                                        original_title : new_original_title,
+                                        language : new_language,
+                                        rating : new_rating,
+                                        genre_card : new_genre
                                     };
                                     //Creo un nuovo elemento con handlebars e lo inserisco in pagina
                                     var template_html_card = $("#card-template").html();
@@ -216,7 +235,7 @@ function find_movies(search) {
             alert("Il cinema è chiuso");
             }
     })
-}
+};
 
 //Funzione per ricerca serie tv
 function find_series(search) {
@@ -260,7 +279,7 @@ function find_series(search) {
 
                     // Faccio una chiamata ajax relativa alla pagina e genero le schede dei film per riempire la relativa pagina
                     $.ajax({
-                        url : "https://api.themoviedb.org/3/search/movie",
+                        url : "https://api.themoviedb.org/3/search/tv",
                         method : "GET",
                         data : {
                             api_key : "fc16baf9f9f37096b14c800ebf114a8a",
@@ -271,14 +290,30 @@ function find_series(search) {
                         success: function(page_data) {
                                 //Utilizzo la risposta dell'ajax per stampare in serie titolo,  titolo originale, lingua, voto
                                 for (var j = 0; j < page_data.results.length; j++) {
+                                    //Salvo gli elementi che mi interessano in specifiche variabili
+                                    var new_card_id = page_data.results[j].id;
+                                    var new_title = page_data.results[j].name;
+                                    if (page_data.results[j].poster_path == null) {
+                                        var new_poster = "img/cinema.jpg";
+                                    } else {
+                                        var new_poster = "https://image.tmdb.org/t/p/w185" + page_data.results[j].poster_path;
+                                    }
+                                    var new_original_title = data.results[j].original_name;
+                                    var new_language = getFlags(page_data.results[j].original_language);
+                                    var new_rating = star_rating(page_data.results[j].vote_average);
+                                    var new_genre = genreToString(page_data.results[j].genre_ids)
+
                                     //Creo un oggetto con i valori che mi interessano
                                     var html_element_card = {
-                                        title : page_data.results[j].name,
-                                        poster : page_data.results[j].poster_path,
-                                        original_title : data.results[j].original_name,
-                                        language : getFlags(page_data.results[j].original_language),
-                                        rating : star_rating(page_data.results[j].vote_average)
+                                        card_id : new_card_id,
+                                        title : new_title,
+                                        poster : new_poster,
+                                        original_title : new_original_title,
+                                        language : new_language,
+                                        rating : new_rating,
+                                        genre_card : new_genre
                                     };
+
                                     //Creo un nuovo elemento con handlebars e lo inserisco in pagina
                                     var template_html_card = $("#card-template").html();
 
@@ -298,7 +333,23 @@ function find_series(search) {
             alert("Il cinema è chiuso");
             }
     })
-}
+};
+
+//Funzione per fare una string coi generi a partire dagli // IDEA:
+function genreToString(genre_id) {
+    var genre_array = [];
+    console.log(genre_id);
+    for (var i = 0; i < genre_id.length; i++) {
+        for (var j = 0; j < genre_list.length; j++) {
+            if (genre_list[j].id == genre_id[i]) {
+                genre_array.push(genre_list[j].name)
+                var genre_string = genre_array.join(", ");
+                // genre_array.push(genre_list[j].name)
+            };
+        };
+    };
+    return genre_string;
+};
 
 //Funzione per trasformare il voto in decimi in stelline da 1 a 5
 function star_rating(rating) {

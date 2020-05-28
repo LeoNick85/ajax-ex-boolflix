@@ -1,3 +1,4 @@
+/* general */
 * {
     margin: 0px;
     padding: 0px;
@@ -11,6 +12,7 @@
     display: table;
 }
 
+/* header */
 header {
     height: 100px;
     padding: 0px 30px;
@@ -37,6 +39,7 @@ h1 {
     text-transform: uppercase;
 }
 
+/* body */
 body {
     background-image: url("img/background.jpg");
 }
@@ -46,6 +49,7 @@ main {
     justify-content: space-around;
 }
 
+/* sidebar(filters) */
 aside {
     margin-top: 80px;
     background-image: linear-gradient(to top, black, grey);
@@ -78,11 +82,13 @@ button.search-filter {
     border-radius: 3px;
 }
 
+/* container(search-results) */
 #search-wrapper {
     margin-top: 20px;
     width: 70vw;
 }
 
+/* tab elements */
 .result-tab {
     float: left;
     width: 50%;
@@ -108,6 +114,7 @@ button.search-filter {
     padding: 4px;
 }
 
+/* container movie/tv card */
 .result-wrapper {
     display: none;
     width: 100%;
@@ -122,6 +129,7 @@ button.search-filter {
     display: block;
 }
 
+/* page buttons */
 .page-counter {
     padding: 16px;
     text-align: center;
@@ -145,13 +153,13 @@ button.active-btn {
     text-decoration: underline;
 }
 
+/* results page */
 .container {
     display: none;
     margin: auto;
     width: 95%;
     padding: 16px 0px;
 }
-
 
 .active-page {
     visibility: visible;
@@ -160,48 +168,96 @@ button.active-btn {
     flex-wrap: wrap;
 }
 
-
-
-.fa-star {
-    color: yellow;
+/* movie/tv card */
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: transparent;
+  width: 200px;
+  height: 250px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px;
+  margin: 8px;
 }
 
-ul {
-    width: 200px;
-    list-style-type: none;
-    float: left;
-    margin: 8px;
-    padding: 16px;
-    background-image: linear-gradient(to bottom right, #ff7a59, red);
-    border-radius: 8px;
-    border: 5px solid #f3f5f9;
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color:#505050;
+  color: white;
+  transform: rotateY(180deg);
+  padding: 8px;
+}
+
+p.card-title {
     text-align: center;
-}
-
-ul li img {
-    width: 170px;
-}
-
-li:nth-child(1) {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 6px 0px;
-}
-
-li:nth-child(2) {
-    font-size: 15px;
-    color: lightgrey;
-    margin: 4px 0px;
-}
-
-li:nth-child(4) {
-    font-size: 25px;
-    font-weight: bold;
-    background-color: black;
     color: red;
-    margin: 8px 0px;
+    font-weight: bold;
+    padding: 8px 0px;
+}
+
+p.original-title-card {
+    font-size: 13px;
+    padding: 4px 0px;
+    text-transform: uppercase;
+}
+
+p.original-title-card span{
+    text-transform: none;
+}
+
+p.genre-card {
+    font-size: 13px;
+    padding: 4px 0px;
+    text-transform: uppercase;
+}
+
+p.genre-card span{
+    text-transform: none;
+}
+
+p.flag {
+    text-align: center;
 }
 
 img.flag {
     width: 20px;
+    padding: 4px 0px;
+}
+
+p.rating-card {
+    background-color: black;
+    padding: 4px;
+    text-align: center;
+}
+
+.fa-star {
+    color: yellow;
 }
